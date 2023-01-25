@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:scrolling_years_calendar/day_number.dart';
+import 'package:scrolling_years_calendar/month_title.dart';
 import 'package:scrolling_years_calendar/utils/dates.dart';
 import 'package:scrolling_years_calendar/utils/screen_sizes.dart';
-import 'package:scrolling_years_calendar/month_title.dart';
-import 'package:scrolling_years_calendar/day_number.dart';
 
 class MonthView extends StatelessWidget {
   const MonthView({
-    @required this.context,
-    @required this.year,
-    @required this.month,
-    @required this.padding,
-    @required this.currentDateColor,
+    required this.context,
+    required this.year,
+    required this.month,
+    required this.padding,
+    required this.currentDateColor,
     this.highlightedDates,
     this.highlightedDateColor,
     this.monthNames,
@@ -23,21 +23,21 @@ class MonthView extends StatelessWidget {
   final int month;
   final double padding;
   final Color currentDateColor;
-  final List<DateTime> highlightedDates;
-  final Color highlightedDateColor;
-  final List<String> monthNames;
-  final Function onTap;
-  final TextStyle titleStyle;
+  final List<DateTime>? highlightedDates;
+  final Color? highlightedDateColor;
+  final List<String>? monthNames;
+  final Function? onTap;
+  final TextStyle? titleStyle;
 
   Color getDayNumberColor(DateTime date) {
-    Color color;
+    Color? color;
     if (isCurrentDate(date)) {
       color = currentDateColor;
     } else if (highlightedDates != null &&
-        isHighlightedDate(date, highlightedDates)) {
+        isHighlightedDate(date, highlightedDates!)) {
       color = highlightedDateColor;
     }
-    return color;
+    return color ?? Colors.black;
   }
 
   Widget buildMonthDays(BuildContext context) {
@@ -48,7 +48,7 @@ class MonthView extends StatelessWidget {
     final int firstWeekdayOfMonth = DateTime(year, month, 1).weekday;
 
     for (int day = 2 - firstWeekdayOfMonth; day <= daysInMonth; day++) {
-      Color color;
+      Color? color;
       if (day > 0) {
         color = getDayNumberColor(DateTime(year, month, day));
       }
@@ -104,9 +104,8 @@ class MonthView extends StatelessWidget {
         ? Container(
             child: buildMonthView(context),
           )
-        : FlatButton(
-            onPressed: () => onTap(year, month),
-            padding: const EdgeInsets.all(0.0),
+        : TextButton(
+            onPressed: () => onTap == null ? null : onTap!(year, month),
             child: buildMonthView(context),
           );
   }
