@@ -11,6 +11,7 @@ class MonthView extends StatelessWidget {
     required this.month,
     required this.padding,
     required this.currentDateColor,
+    required this.unhighlightedColor,
     this.highlightedDates,
     this.highlightedDateColor,
     this.monthNames,
@@ -23,6 +24,7 @@ class MonthView extends StatelessWidget {
   final int month;
   final double padding;
   final Color currentDateColor;
+  final Color unhighlightedColor;
   final List<DateTime>? highlightedDates;
   final Color? highlightedDateColor;
   final List<String>? monthNames;
@@ -37,7 +39,7 @@ class MonthView extends StatelessWidget {
         isHighlightedDate(date, highlightedDates!)) {
       color = highlightedDateColor;
     }
-    return color ?? Colors.black;
+    return color ?? unhighlightedColor;
   }
 
   Widget buildMonthDays(BuildContext context) {
